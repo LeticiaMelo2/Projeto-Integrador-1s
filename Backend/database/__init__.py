@@ -1,0 +1,1 @@
+#esse arquivo vazio mostro pto python que essa pasta é um módulo, ou seja, permite importar coisas da pasta

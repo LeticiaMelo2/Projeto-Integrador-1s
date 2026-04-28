@@ -1,0 +1,9 @@
+#bibliotecas que precisam para rodar
+
+pymysql==1.1.0
+python-dotenv==1.0.0
+flask
+flask-wtf
+wtforms
+werkzeug
+mysql-connector-python
