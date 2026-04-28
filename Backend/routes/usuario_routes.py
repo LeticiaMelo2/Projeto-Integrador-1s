@@ -67,3 +67,22 @@ def criar_ocorrencia():
 @usuario_bp.route('/ticket')
 def ticket():
     return render_template('usuario/ticket.html')
+
+@app.route("/ocorrencias")
+def ocorrencias_view():
+    filtro = request.args.get("status", "todos")
+
+    cnx = conectar_bd()
+    cursor = cnx.cursor(dictionary=True)
+
+    if filtro == "todos":
+        cursor.execute("SELECT * FROM ocorrencias")
+    else:
+        cursor.execute("SELECT * FROM ocorrencias WHERE status = %s", (filtro,))
+
+    dados = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+
+    return render_template("ocorrencias.html", ocorrencias=dados, filtro=filtro)
