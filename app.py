@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 import mysql.connector
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, EqualTo, Email
-from werkzeug.security import generate_password_hash
 from flask import session
 
 #http://127.0.0.1:5000
@@ -150,6 +149,24 @@ def criar_ocorrencia():
 def ticket():
     return render_template('ticket.html')
 
+@app.route("/ocorrencias")
+def ocorrencias_view():
+    filtro = request.args.get("status", "todos")
+
+    cnx = conectar_bd()
+    cursor = cnx.cursor(dictionary=True)
+
+    if filtro == "todos":
+        cursor.execute("SELECT * FROM ocorrencias")
+    else:
+        cursor.execute("SELECT * FROM ocorrencias WHERE status = %s", (filtro,))
+
+    dados = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+
+    return render_template("ocorrencias.html", ocorrencias=dados, filtro=filtro)
 #executando o servidor
 if __name__ == '__main__':
     app.run(debug=True)

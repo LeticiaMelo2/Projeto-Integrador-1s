@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de ocorrências</title>
+</head>
+<body>
+    <h2>Minhas ocorrências</h2>
+
+    <form method="GET" action="/ocorrencias">
+        <label>Filtrar por status:</label>
+        <select name="status" onchange="this.form.submit()">
+            <option value="todos" {% if filtro == 'todos' %}selected{% endif %}>Todos</option>
+            <option value="aberto" {% if filtro == 'aberto' %}selected{% endif %}>Aberto</option>
+            <option value="em andamento" {% if filtro == 'em andamento' %}selected{% endif %}>Em andamento</option>
+            <option value="finalizada" {% if filtro == 'finalizada' %}selected{% endif %}>Finalizada</option>
+        </select>
+    </form>
+    
+    <hr>
+
+<!-- LISTA -->
+{% if ocorrencias %}
+    <ul>
+        {% for o in ocorrencias %}
+            <li>
+                <strong>#{{ o.id }}</strong> - {{ o.descricao }}
+                <br>
+                Status: {{ o.status }}
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Nenhuma ocorrência encontrada.</p>
+{% endif %}
+
+</body>
+</html>
