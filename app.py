@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import mysql.connector
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, EqualTo, Email
-from flask import session
 
 #http://127.0.0.1:5000
 
@@ -41,6 +40,7 @@ def autenticar():
     cnx.close()
 
     if usuario and check_password_hash(usuario['password'], password):
+        session['user_id'] = usuario['id']
         session['user_name'] = usuario['first_name']
         return redirect(url_for('home'))
 
@@ -129,15 +129,18 @@ def criar_ocorrencia():
 
     prioridade = calcular_prioridade(impacto, urgencia)
 
-    user_name = session.get('user_name')
+    user_id = session.get('user_id')
+
+    status_id = 1
 
     cnx = conectar_bd()
     cursor = cnx.cursor()
 
+
     cursor.execute("""
-        INSERT INTO ocorrencias (user_name, titulo, descricao, impacto, urgencia,prioridade)
-        VALUES (%s, %s, %s, %s, %s, %s)
-    """, (user_name, titulo, descricao, impacto, urgencia, prioridade))
+        INSERT INTO ocorrencias (user_id, titulo, descricao, impacto, urgencia,prioridade, status_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (user_id, titulo, descricao, impacto, urgencia, prioridade, status_id))
 
     cnx.commit()
     cursor.close()
@@ -149,24 +152,37 @@ def criar_ocorrencia():
 def ticket():
     return render_template('ticket.html')
 
-@app.route("/ocorrencias")
-def ocorrencias_view():
-    filtro = request.args.get("status", "todos")
+@app.route('/ocorrencias')
+def ocorrencias():
 
-    cnx = conectar_bd()
-    cursor = cnx.cursor(dictionary=True)
+    filtro = request.args.get('filtro', 'todos')
+    user_id = session.get('user_id')
 
-    if filtro == "todos":
-        cursor.execute("SELECT * FROM ocorrencias")
-    else:
-        cursor.execute("SELECT * FROM ocorrencias WHERE status = %s", (filtro,))
+    conn = conectar_bd()
+    cursor = conn.cursor(dictionary=True)
+
+    query = """
+        SELECT o.id, o.titulo, o.descricao, s.nome AS status
+        FROM ocorrencias o
+        JOIN status s ON o.status_id = s.id
+        WHERE o.user_id = %s
+    """
+
+    params = [user_id]
+
+    # adiciona filtro se não for "todos"
+    if filtro != "todos":
+        query += " AND s.nome = %s"
+        params.append(filtro)
+
+    cursor.execute(query, params)
 
     dados = cursor.fetchall()
+    conn.close()
 
-    cursor.close()
-    cnx.close()
+    return render_template("status.html", dados=dados, filtro=filtro)
 
-    return render_template("ocorrencias.html", ocorrencias=dados, filtro=filtro)
+
 #executando o servidor
 if __name__ == '__main__':
     app.run(debug=True)
