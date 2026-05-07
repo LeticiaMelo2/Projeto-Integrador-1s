@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Painel do Operador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body class="body-operador">
+
+<div class="container-operador">
+
+    <h1>Chamados</h1>
+
+    <!-- FILTROS -->
+    <div class="filtros">
+        <form class="form-operador" method="GET" action="/operador">
+
+                <div class="select-operador">
+                    <select name="status" onchange="this.form.submit()">
+                        <option disabled selected>Status</option>
+                        <option value="todos"{% if status == 'todos' %}selected{% endif %}>Todos</option>
+                        <option value="aberta"{% if status == 'aberta' %}selected{% endif %}>Abertas</option>
+                        <option value="em andamento" {% if status == 'em andamento' %}selected{% endif %}>Em andamento</option>
+                        <option value="finalizada"{% if status == 'finalizada' %}selected{% endif %}>Finalizadas</option>
+                    </select>
+                </div>
+
+                <div class="select-operador">
+                    <select name="prioridade" onchange="this.form.submit()">
+                        <option disabled selected>Prioridade</option>
+                        <option value="baixa"{% if prioridade == 'baixa' %}selected{% endif %}>Baixa</option>
+                        <option value="media"{% if prioridade == 'media' %}selected{% endif %}>Média</option>
+                        <option value="alta"{% if prioridade == 'alta' %}selected{% endif %}>Alta</option>
+                    </select>
+                </div>
+
+        </form>
+    </div>
+
+    <!-- TABELA -->
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Status</th>
+            <th>Prioridade</th>
+            <th>Ação</th>
+        </tr>
+
+        <tbody>
+        {% for item in dados %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.titulo }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.prioridade }}</td>
+            <td>
+                <form method="POST">
+                    <input type="hidden" name="ocorrencia_id" value="{{ item.id }}">
+                        <button class="botao-operador" type="submit">Atender</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
