@@ -9,6 +9,18 @@
 </head>
 <body class="body-ticket">
 
+    <div class="alert-container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert-success">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+</div>
+
     <!--container principal-->
     <form method="POST" action="/criar_ocorrencia">
 
@@ -53,13 +65,28 @@
                 <textarea name="descricao" placeholder="Descrição" required></textarea>
             </div>
 
-            <div>
-                <button class="ocorrencia">Gerar ocorrência</button>
+            <button type="button" class="ocorrencia" onclick="mostrarMensagem()">
+                Gerar ocorrência
+            </button>
+
+            <div id="mensagem-popup" class="mensagem-popup">
+                Ocorrência criada com sucesso!
             </div>
-
         </form>
-
     </main>
+
+    <script>
+        function mostrarMensagem() {
+
+            let popup = document.getElementById("mensagem-popup");
+
+            popup.style.display = "block";
+
+            setTimeout(() => {
+                document.querySelector("form").submit();
+            }, 1500);
+        }
+    </script>
 
 </body>
 </html>

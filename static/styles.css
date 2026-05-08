@@ -209,6 +209,32 @@ label {
     transition: 0.5s ;
 }
 
+.alert-error {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    text-align: center;
+    animation: shake 0.4s ease, fadeOut 4s forwards;
+}
+
+/* efeito de tremor (erro) */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* desaparece depois */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+
  /*Home*/
  .body-home {
     display: flex;
@@ -268,6 +294,7 @@ p {
 }
 
 /* reportar ocorrencia */
+
 .body-ticket {
     display: flex;
     justify-content: center;
@@ -409,6 +436,45 @@ margin-bottom: 30px;
     display: inline-block;
 }
 
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+}
+
+.mensagem-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #4CAF50;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    font-size: 18px;
+    text-align: center;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    from {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
 /* status*/
 
 .body-status {
@@ -508,6 +574,232 @@ th, td {
     border: 1px solid white
 }
 
+/*operador*/
+
+.body-operador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('images.jpg');
+    background-size: cover;
+    background-position: center ;
+
+}
+
+.container-operador {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: transparent;
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+    color: #fff;
+    padding: 40px 60px;
+    box-shadow: 0 0 10px white;
+    backdrop-filter: blur(50px);
+}
+
+.filtros {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.container-operador h1 {
+font-size: 30px;
+text-align: center;
+margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid white;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid white;
+}
+
+.filtros {
+    margin-bottom: 12px;
+}
+
+.select-operador select {
+    width: auto;
+    min-width: 180px;
+    margin-right: 10px;
+    height: 38px;
+    padding: 0 35px 0 15px;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    appearance: none;
+    cursor: pointer;
+}
+
+.filtros select option {
+    color: black;
+}
 
 
+.select-operador {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    position: relative;
 
+}
+
+
+.select-operador::after {
+    content: "▼";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none;
+    font-size: 12px;
+}
+
+.form-operador {
+    display: flex;
+}
+
+.botao-operador {
+    color: rgb(72, 195, 244);
+    border: 1px solid rgb(72, 195, 244);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-operador:hover {
+    background: rgb(72, 195, 244);
+    color: white;
+}
+
+/*home operador*/
+.body-home-operador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../static/images.jpg');
+    background-size: cover;
+    background-position: center ;
+}
+
+.container-home-operador {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: transparent;
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+    color: #fff;
+    padding: 40px 60px;
+    box-shadow: 0 0 10px white;
+    backdrop-filter: blur(50px);
+}
+
+.container-home-operador h1 {
+font-size: 36px;
+text-align: center;
+}
+
+.resumo-solicitacoes,
+.ocorrencias {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    background-color:#fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    color: rgb(72, 195, 244);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgb(0, 0, .1);
+}
+
+.resumo-solicitacoes:hover,
+.ocorrencias:hover {
+    background-color: transparent;
+    border:2px solid white;
+    color: #fff;
+    transition: 0.5s ;
+}
+
+
+/*eststistica*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body-estatistica {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../static/images.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-estatistica {
+    width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: transparent;
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+    color: #fff;
+    padding: 40px 60px;
+    box-shadow: 0 0 10px white;
+    backdrop-filter: blur(50px);
+}
+
+.container-estatistica h2 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.container-estatistica p {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #fff;
+    border-radius: 40px;
+    padding: 15px 25px;
+    font-size: 16px;
+    color: rgb(72, 195, 244);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgb(0, 0, 0, .1);
+    border: 2px solid transparent;
+    transition: 0.5s;
+}
+
+.container-estatistica p:hover {
+    background-color: transparent;
+    border: 2px solid white;
+    color: #fff;
+}
+
+.container-estatistica h2:last-of-type {
+    margin-top: 15px;
+}

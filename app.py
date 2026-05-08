@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, flash
 import mysql.connector
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_wtf import FlaskForm
@@ -17,7 +17,7 @@ def conectar_bd():
                                     user='root',
                                     password='Ll171207',
                                     host='127.0.0.1',
-                                    database='usuario'
+                                    database='dbProjetoIntegrador1'
                                     )
 
 #login
@@ -40,9 +40,16 @@ def autenticar():
     cnx.close()
 
     if usuario and check_password_hash(usuario['password'], password):
+
         session['user_id'] = usuario['id']
         session['user_name'] = usuario['first_name']
-        return redirect(url_for('home'))
+        session['permissao'] = usuario['permissao_id']
+
+        if usuario['permissao_id'] == 1:
+            return redirect(url_for('home'))
+
+        elif usuario['permissao_id'] == 2:
+            return redirect(url_for('homeOperador'))
 
     return "Email ou senha incorretos"
     
@@ -97,8 +104,12 @@ def register():
 
 @app.route('/home')
 def home():
-    name = session.get('user_name')
-    return render_template('home.html', name=name)
+
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    
+    return render_template('home.html',name = session.get('user_name'))
 
 def calcular_prioridade(impacto, urgencia):
 
@@ -127,6 +138,10 @@ def criar_ocorrencia():
     impacto = request.form.get('impacto')
     urgencia = request.form.get('urgencia')
 
+    if not titulo or not descricao or not impacto or not urgencia:
+        flash("Preencha todos os campos da ocorrência!")
+        return redirect(url_for('ticket'))
+
     prioridade = calcular_prioridade(impacto, urgencia)
 
     user_id = session.get('user_id')
@@ -146,7 +161,7 @@ def criar_ocorrencia():
     cursor.close()
     cnx.close()
 
-    return redirect(url_for('home'))
+    return redirect(url_for('ticket'))
 
 @app.route('/ticket')
 def ticket():
@@ -175,6 +190,8 @@ def ocorrencias():
         query += " AND s.nome = %s"
         params.append(filtro)
 
+    query += " ORDER BY o.id DESC"
+
     cursor.execute(query, params)
 
     dados = cursor.fetchall()
@@ -182,8 +199,185 @@ def ocorrencias():
 
     return render_template("status.html", dados=dados, filtro=filtro)
 
+@app.route('/home-operador')
+def homeOperador():
 
-#executando o servidor
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    return render_template('home_operador.html')
+
+
+@app.route('/operador', methods = ['GET', 'POST'])
+def operador():
+
+    conn = conectar_bd()
+    cursor = conn.cursor(dictionary=True)
+
+    if request.method == 'POST':
+        ocorrencia_id = request.form.get("ocorrencia_id")
+        operador_id = session.get('user_id')
+
+        query = """
+            UPDATE ocorrencias
+            SET operador_id = %s,
+                status_id = 2
+            WHERE id = %s
+        """
+
+        cursor.execute(query, (operador_id, ocorrencia_id))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return redirect(url_for('operador'))
+
+    status = request.args.get("status")
+    prioridade = request.args.get("prioridade")
+
+    query = """
+        SELECT o.id, o.titulo, o.descricao, s.nome AS status, o.prioridade
+        FROM ocorrencias o
+        JOIN status s ON o.status_id = s.id
+        WHERE 1=1
+    """
+    query += " ORDER BY o.id DESC"
+
+    params = []
+
+
+    #todo arrumar esse filtro que ta bugado
+    # status
+    if status and status != "todos":
+        query += " AND o.status_id = %s"
+        params.append(status)
+
+    # prioridade
+    if prioridade and prioridade != "todas":
+        query += " AND o.prioridade = %s"
+        params.append(prioridade)
+
+    print(query)
+    print(params)
+
+    cursor.execute(query, tuple(params))
+    resultado = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("operador.html", dados=resultado)
+
+@app.route('/operador/ocorrencias', methods=['GET', 'POST'])
+def operador_ocorrencias():
+
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    filtro = request.args.get("prioridade", "todos")
+    operador_id = session.get('user_id')
+
+    conn = conectar_bd()
+    cursor = conn.cursor(dictionary=True)
+
+    # ALTERAR STATUS
+    if request.method == 'POST':
+
+        ocorrencia_id = request.form.get("ocorrencia_id")
+
+        cursor.execute("""
+            SELECT status_id 
+            FROM ocorrencias 
+            WHERE id = %s
+        """, (ocorrencia_id,))
+
+        ocorrencia = cursor.fetchone()
+
+        if ocorrencia and ocorrencia['status_id'] == 3:
+            cursor.close()
+            conn.close()
+            return "Ocorrência já está fechada"
+
+        cursor.execute("""
+            UPDATE ocorrencias
+            SET status_id = 3
+            WHERE id = %s
+        """, (ocorrencia_id,))
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return redirect(url_for('operador_ocorrencias'))
+
+    # LISTAR OCORRÊNCIAS
+    query = """
+        SELECT o.id, o.titulo, o.descricao, o.prioridade,
+               s.nome AS status
+        FROM ocorrencias o
+        JOIN status s ON o.status_id = s.id
+        WHERE o.operador_id = %s
+    """
+
+    params = [operador_id]
+
+    if filtro != "todos":
+        query += " AND o.prioridade = %s"
+        params.append(filtro)
+
+    query += " ORDER BY o.id DESC"
+
+    cursor.execute(query, params)
+    dados = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "ocorrencias_atribuidas.html",
+        dados=dados,
+        filtro=filtro
+    )
+
+@app.route('/estatisticas')
+def estatisticas():
+
+    conn = conectar_bd()
+    cursor = conn.cursor(dictionary=True)
+
+    # total por status
+    query_status = """
+        SELECT s.nome AS status, COUNT(*) AS total
+        FROM ocorrencias o
+        JOIN status s ON o.status_id = s.id
+        GROUP BY s.nome
+    """
+
+    cursor.execute(query_status)
+    estatisticas_status = cursor.fetchall()
+
+    # total por prioridade
+    query_prioridade = """
+        SELECT prioridade, COUNT(*) AS total
+        FROM ocorrencias
+        GROUP BY prioridade
+    """
+
+    cursor.execute(query_prioridade)
+    estatisticas_prioridade = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        'estatisticas.html',
+        estatisticas_status=estatisticas_status,
+        estatisticas_prioridade=estatisticas_prioridade
+    )
+
+
+# executando o servidor
 if __name__ == '__main__':
     app.run(debug=True)
-    
