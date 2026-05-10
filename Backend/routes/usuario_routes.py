@@ -22,7 +22,13 @@ def autenticar():
     if usuario:
         session['user_id'] = usuario.id
         session['user_name'] = usuario.first_name
-        return redirect(url_for('usuario.home'))
+        session['permissao'] = usuario.permissao_id
+
+        if usuario.permissao_id == 1:
+            return redirect(url_for('usuario.home'))
+
+        elif usuario.permissao_id == 2:
+            return redirect(url_for('operador.dashboard'))
 
     return "Email ou senha incorretos"
 
@@ -58,9 +64,10 @@ def criar_ocorrencia():
     urgencia = request.form.get('urgencia')
 
     prioridade = calcular_prioridade(impacto, urgencia)
-    usuario_id = session.get('user_id')
+    user_id = session.get('user_id')
+    status_id = 1
 
-    solicitacao_repo.criar(usuario_id, titulo, descricao, impacto, urgencia, prioridade)
+    solicitacao_repo.criar(user_id, titulo, descricao, impacto, urgencia, prioridade, status_id)
 
     return redirect(url_for('usuario.home'))
 
@@ -68,21 +75,11 @@ def criar_ocorrencia():
 def ticket():
     return render_template('usuario/ticket.html')
 
-@app.route("/ocorrencias")
-def ocorrencias_view():
-    filtro = request.args.get("status", "todos")
+@usuario_bp.route('/ocorrencias')
+def ocorrencias():
+    filtro = request.args.get('filtro', 'todos')
+    user_id = session.get('user_id')
 
-    cnx = conectar_bd()
-    cursor = cnx.cursor(dictionary=True)
+    dados = solicitacao_repo.buscar_por_usuario(user_id, filtro)
 
-    if filtro == "todos":
-        cursor.execute("SELECT * FROM ocorrencias")
-    else:
-        cursor.execute("SELECT * FROM ocorrencias WHERE status = %s", (filtro,))
-
-    dados = cursor.fetchall()
-
-    cursor.close()
-    cnx.close()
-
-    return render_template("ocorrencias.html", ocorrencias=dados, filtro=filtro)
+    return render_template('usuario/status.html', dados=dados, filtro=filtro)

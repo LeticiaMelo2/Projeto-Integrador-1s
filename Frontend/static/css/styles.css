@@ -14,7 +14,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../static/images.jpg');
+    background: url('/static/images/images.jpg');
     background-size: cover;
     background-position: center ;
 }
@@ -139,7 +139,7 @@ text-align: center;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('/static/images.jpg');
+    background-image: url('/static/images/images.jpg');
     background-size: cover;
     background-position: center ;
 }
@@ -215,7 +215,7 @@ label {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../static/images.jpg');
+    background: url('/static/images/images.jpg');
     background-size: cover;
     background-position: center ;
 }
@@ -273,7 +273,7 @@ p {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../static/images.jpg');
+    background: url('/static/images/images.jpg');
     background-size: cover;
     background-position: center ;
 }
@@ -416,7 +416,7 @@ margin-bottom: 30px;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../static/images.jpg');
+    background: url('/static/images/images.jpg');
     background-size: cover;
     background-position: center ;
 }
@@ -503,7 +503,7 @@ hr {
 }
 
 th, td {
-    text-align: center; 
+    text-align: center;
     padding: 10px;
     border: 1px solid white
 }
@@ -515,7 +515,7 @@ th, td {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('images.jpg');
+    background: url('/static/images/images.jpg');
     background-size: cover;
     background-position: center ;
 

@@ -28,3 +28,10 @@ class AuthService: #cria uma classe chamada AuthService
         
         password_hash = generate_password_hash(password)
         return self.usuario_repo.criar(first_name, last_name, email, password_hash)
+
+    def login_usuario(self, email: str, password: str):
+        usuario = self.usuario_repo.buscar_por_email(email)
+        resultado = check_password_hash(usuario.password, password)
+        if usuario and resultado:
+            return usuario
+        return None

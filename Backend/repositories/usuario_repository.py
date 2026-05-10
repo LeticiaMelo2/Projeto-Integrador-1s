@@ -19,7 +19,8 @@ class UsuarioRepository:
                     first_name=resultado['first_name'],
                     last_name=resultado['last_name'],
                     email=resultado['email'],
-                    password=resultado['password']
+                    password=resultado['password'],
+                    permissao_id=resultado['permissao_id']
                 )
             return None
 
@@ -42,5 +43,20 @@ class UsuarioRepository:
         except Error as e:
             print(f"Erro ao criar usuário: {e}")
             return False
+        finally:
+            cursor.close()
+
+    def buscar_todos(self):
+        conn = get_db()
+        cursor = conn.cursor(dictionary=True)
+
+        try:
+            sql = "SELECT id, first_name, last_name FROM usuarios"
+            cursor.execute(sql)
+            return cursor.fetchall()
+
+        except Error as e:
+            print(f"Erro ao buscar usuários: {e}")
+            return []
         finally:
             cursor.close()

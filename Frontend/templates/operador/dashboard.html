@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Painel do Operador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body class="body-operador">
+
+<div class="container-operador">
+
+    <h1>Chamados</h1>
+
+    <!-- ESTATÍSTICAS -->
+    <hr>
+    <div class="estatisticas">
+        <div>
+            <details>
+                <summary style="cursor: pointer; font-weight: bold; margin-bottom: 10px;">Total por Status</summary>
+                <table>
+                    <tr>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                    {% for item in total_por_status %}
+                    <tr>
+                        <td>{{ item.status }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </details>
+        </div>
+
+        <div>
+            <details>
+                <summary style="cursor: pointer; font-weight: bold; margin-bottom: 10px;">Total por Prioridade</summary>
+                <table>
+                    <tr>
+                        <th>Prioridade</th>
+                        <th>Total</th>
+                    </tr>
+                    {% for item in total_por_prioridade %}
+                    <tr>
+                        <td>{{ item.prioridade }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </details>
+        </div>
+    </div>
+    <hr>
+
+    <!-- FILTROS -->
+    <div class="filtros">
+        <form class="form-operador" method="GET" action="/operador/dashboard">
+
+            <div class="select-operador">
+                <select name="status" onchange="this.form.submit()">
+                    <option disabled selected>Status</option>
+                    <option value="todos" {% if status == 'todos' %}selected{% endif %}>Todos</option>
+                    <option value="aberta" {% if status == 'aberta' %}selected{% endif %}>Abertas</option>
+                    <option value="em andamento" {% if status == 'em andamento' %}selected{% endif %}>Em andamento</option>
+                    <option value="finalizada" {% if status == 'finalizada' %}selected{% endif %}>Finalizadas</option>
+                </select>
+            </div>
+
+            <div class="select-operador">
+                <select name="prioridade" onchange="this.form.submit()">
+                    <option disabled selected>Prioridade</option>
+                    <option value="todas" {% if prioridade == 'todas' %}selected{% endif %}>Todas</option>
+                    <option value="baixa" {% if prioridade == 'baixa' %}selected{% endif %}>Baixa</option>
+                    <option value="media" {% if prioridade == 'media' %}selected{% endif %}>Média</option>
+                    <option value="alta" {% if prioridade == 'alta' %}selected{% endif %}>Alta</option>
+                </select>
+            </div>
+
+            <div class="select-operador">
+                <select name="usuario_id" onchange="this.form.submit()">
+                    <option value="todos" {% if usuario_id == 'todos' %}selected{% endif %}>Todos usuários</option>
+                    {% for u in usuarios %}
+                    <option value="{{ u.id }}" {% if usuario_id == u.id|string %}selected{% endif %}>{{ u.first_name }} {{ u.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- TABELA -->
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Status</th>
+            <th>Prioridade</th>
+            <th>Usuário</th>
+            <th>Ação</th>
+        </tr>
+
+        <tbody>
+        {% for item in dados %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.titulo }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.prioridade }}</td>
+            <td>{{ item.first_name }} {{ item.last_name }}</td>
+            <td>
+                {% if item.status == 'aberta' %}
+                    <form method="POST" action="/operador/dashboard">
+                        <input type="hidden" name="ocorrencia_id" value="{{ item.id }}">
+                        <button class="botao-operador" type="submit">Atender</button>
+                    </form>
+                {% elif item.status == 'em andamento' %}
+                    <form method="POST" action="/operador/fechar/{{ item.id }}">
+                        <button class="botao-operador" type="submit">Fechar</button>
+                    </form>
+                {% else %}
+                    Fechado
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not dados %}
+        <tr>
+            <td colspan="6">Nenhuma ocorrência encontrada.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

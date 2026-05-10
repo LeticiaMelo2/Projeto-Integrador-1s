@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <title>Consulta de ocorrências</title>
-    
 </head>
 <body class="body-status">
     <div class="container-status">
@@ -28,26 +27,30 @@
 
         <hr>
 
-    <table border="1">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>título</th>
-      <th>Status</th>
-    </tr>
-  </thead>
- <tbody>
-        {% for item in dados %}
-        <tr>
-            <td>{{ item.id }}</td>
-            <td>{{ item.titulo }}</td>
-            <td>{{ item.status }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in dados %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.titulo }}</td>
+                    <td>{{ item.status }}</td>
+                </tr>
+                {% endfor %}
+                {% if not dados %}
+                <tr>
+                    <td colspan="3">Nenhuma ocorrência encontrada.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
 
-
+    </div>
 </body>
-
 </html>
