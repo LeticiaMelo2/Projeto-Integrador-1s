@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Ocorrência Registrada</title>
+</head>
+<body class="body-sucesso">
+    <main class="container-sucesso">
+        <div class="icon-sucesso">
+            <i class="fas fa-check-circle"></i>
+        </div>
+
+        <h1>Ocorrência Registrada!</h1>
+        <p>Sua ocorrência foi registrada com sucesso e será processada pelo time de atendimento.</p>
+
+        <div class="info-ocorrencia">
+            <p><label>Assunto:</label><span>Registro concluído</span></p>
+            <p><label>Prioridade:</label><span>Média</span></p>
+            <p><label>Status:</label><span style="color: #4ec74e;">Aberto</span></p>
+        </div>
+
+        <div class="botoes-sucesso">
+            <a href="{{ url_for('usuario.home') }}"><button class="btn-voltar" type="button">Voltar ao Início</button></a>
+            <a href="{{ url_for('usuario.ticket') }}"><button class="btn-nova" type="button">Nova Ocorrência</button></a>
+        </div>
+    </main>
+</body>
+</html>

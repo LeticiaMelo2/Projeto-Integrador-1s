@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Consulta de ocorrências</title>
+</head>
+<body class="body-status">
+    <div class="container-status">
+        <h1>Minhas ocorrências</h1>
+
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a href="{{ url_for('usuario.home') }}">
+                <button style="background-color: #fff; border: none; border-radius: 40px; padding: 8px 20px; cursor: pointer; font-size: 14px; color: rgb(72, 195, 244); font-weight: 600; box-shadow: 0 0 10px rgb(0, 0, .1);">Home</button>
+            </a>
+        </div>
+
+        <div class="status">
+            <label for="filtro">Filtrar por status:</label>
+
+            <form method="GET" action="/ocorrencias">
+                <div class="select">
+                    <select name="filtro" id="filtro" onchange="this.form.submit()">
+                        <option value="todos" {% if filtro == 'todos' %}selected{% endif %}>Todos</option>
+                        <option value="aberta" {% if filtro == 'aberta' %}selected{% endif %}>Aberta</option>
+                        <option value="em andamento" {% if filtro == 'em andamento' %}selected{% endif %}>Em andamento</option>
+                        <option value="finalizada" {% if filtro == 'finalizada' %}selected{% endif %}>Finalizada</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <hr>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in dados %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.titulo }}</td>
+                    <td>{{ item.status }}</td>
+                </tr>
+                {% endfor %}
+                {% if not dados %}
+                <tr>
+                    <td colspan="3">Nenhuma ocorrência encontrada.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

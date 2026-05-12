@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Cadastre-se</title>
+</head>
+<body class="body-register">
+    <div class="container-register">
+        <div class="title">
+            <h1>Cadastre-se</h1>
+            <p>Preencha os campos abaixo para se registrar.</p>
+        </div>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="account"> 
+
+                {{ form.first_name.label }} 
+                {{ form.first_name() }} 
+        
+                {{ form.last_name.label }} 
+                {{ form.last_name() }} 
+            
+                {{ form.email.label }} 
+                {{ form.email() }} 
+
+                {% for error in form.email.errors %}
+                    <b>{{ error }}</b>
+                {% endfor %}
+
+                {{ form.password.label}} 
+                {{ form.password() }} 
+                
+                {% for error in form.password.errors %}
+                    <b>{{ error }}</b>
+                {% endfor %}
+
+                {{ form.confirm.label }} 
+                {{ form.confirm() }}
+            </div>
+
+            {{ form.submit(class_="cadastrar") }}
+
+        </form>
+    </div>
+</body>
+</html>
