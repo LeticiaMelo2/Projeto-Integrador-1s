@@ -8,7 +8,13 @@
 </head>
 <body>
     <main class="container-home"> 
-        <h1>Home</h1>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Home</h1>
+            <a href="{{ url_for('usuario.login') }}">
+                <button class="home">Sair</button>
+            </a>
+        </div>
 
         <h2>Olá, {{ name }}!</h2>
         <h3>Como podemos ajudar hoje?</h3>

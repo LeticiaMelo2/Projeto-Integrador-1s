@@ -30,13 +30,13 @@ class UsuarioRepository:
         finally:
             cursor.close()
 
-    def criar(self, first_name: str, last_name: str, email: str, password: str):
+    def criar(self, first_name: str, last_name: str, email: str, password: str, permissao_id: int = 1):
         conn = get_db()
         cursor = conn.cursor()
 
         try:
-            sql = "INSERT INTO usuarios (first_name, last_name, email, password) VALUES (%s, %s, %s, %s)"
-            cursor.execute(sql, (first_name, last_name, email, password))
+            sql = "INSERT INTO usuarios (first_name, last_name, email, password, permissao_id) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(sql, (first_name, last_name, email, password, permissao_id))
             conn.commit()
             return True
 

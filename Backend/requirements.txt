@@ -7,3 +7,4 @@ flask-wtf
 wtforms
 werkzeug
 mysql-connector-python
+email-validator

@@ -7,9 +7,17 @@
 
 <body class="body-operador">
 
+
+
 <div class="container-operador">
 
-    <h1>Chamados</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Chamados</h1>
+            <a href="{{ url_for('operador.login') }}">
+                <button class="home">Sair</button>
+            </a>
+    </div>
+
 
     <!-- ESTATÍSTICAS -->
     <hr>
