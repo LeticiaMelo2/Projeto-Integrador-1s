@@ -29,8 +29,8 @@ def autenticar():
 
         elif usuario.permissao_id == 2:
             return redirect(url_for('operador.dashboard'))
-
-    return "Email ou senha incorretos"
+        
+    return render_template('usuario/login.html', erro = True)
 
 @usuario_bp.route('/register', methods=['GET', 'POST'])
 def register():

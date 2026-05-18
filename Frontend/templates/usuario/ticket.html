@@ -4,80 +4,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <title>Reportar ocorrência</title>
 </head>
-<body>
 
-    <!--container principal-->
+<body class="body-ticket">
+
+    <!-- container principal -->
     <main class="container-ticket">
 
-         <!-- Botão Home adicionado -->
+        <!-- Botão Home -->
         <div style="text-align: right; margin-bottom: 20px;">
+
             <a href="{{ url_for('usuario.home') }}">
-                <button style="background-color: #fff; border: none; border-radius: 40px; padding: 8px 20px; cursor: pointer; font-size: 14px; color: rgb(72, 195, 244); font-weight: 600; box-shadow: 0 0 10px rgb(0, 0, .1);">Home</button>
+
+                <button
+                    style="background-color: #fff; border: none; border-radius: 40px; padding: 8px 20px; cursor: pointer; font-size: 14px; color: rgb(72, 195, 244); font-weight: 600; box-shadow: 0 0 10px rgb(0, 0, .1);">
+
+                    Home
+
+                </button>
+
             </a>
+
         </div>
 
-        <!--- <input type="checkbox" id="toggle-info" hidden> -->
+        <!-- título -->
         <h1 class="titulo-com-info">
+
             Reportar ocorrência
-            <!--<label for="toggle-info" class="info-coin">?</label> -->
+
+            <!-- ícone ajuda -->
+            <i class="bx bx-help-circle btn-ajuda" onclick="abrirPopup()"></i>
+
         </h1>
-       
-        <!--campos principais-->
+
+        <!-- popup -->
+        <div class="popup" id="popup-ajuda">
+
+            <div class="popup-conteudo">
+
+                <!-- botão fechar -->
+                <button class="fechar" onclick="fecharPopup()">
+
+                    <i class='bx bx-x'></i>
+
+                </button>
+
+                <h2>Urgência e Impacto</h2>
+
+                <table class="tabela-ajuda">
+
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Nível</th>
+                        <th>Descrição</th>
+                    </tr>
+
+                    <tr>
+                        <td>Urgência</td>
+                        <td>Alta</td>
+                        <td>Precisa ser resolvido imediatamente.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Urgência</td>
+                        <td>Média</td>
+                        <td>Pode aguardar um curto período.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Urgência</td>
+                        <td>Baixa</td>
+                        <td>Não necessita solução imediata.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Impacto</td>
+                        <td>Alto</td>
+                        <td>Afeta muitas pessoas ou sistemas.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Impacto</td>
+                        <td>Médio</td>
+                        <td>Afeta parcialmente.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Impacto</td>
+                        <td>Baixo</td>
+                        <td>Afeta poucas pessoas/processos.</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- formulário -->
         <form method="POST" action="{{ url_for('usuario.criar_ocorrencia') }}">
 
-            <div class="linha-form"> 
+            <div class="linha-form">
 
+                <!-- assunto -->
                 <div class="input-assunto">
-                    <input name="titulo" placeholder="Assunto" required> 
+
+                    <input name="titulo" placeholder="Assunto" required>
+
                 </div>
 
-                <!--prioridade-->
-                <div class="input-prioridade">  
+                <!-- impacto -->
+                <div class="input-prioridade">
+
                     <select name="impacto">
-                        <option value="Impacto" disabled selected>Impacto</option>
+
+                        <option value="Impacto" disabled selected>
+                            Impacto
+                        </option>
+
                         <option value="Alta">Alta</option>
                         <option value="Média">Média</option>
                         <option value="Baixa">Baixa</option>
+
                     </select>
+
                 </div>
 
-                <div class="input-prioridade"> 
+                <!-- urgência -->
+                <div class="input-prioridade">
+
                     <select name="urgencia">
-                        <option value="Urgência" disabled selected>Urgência</option>
+
+                        <option value="Urgência" disabled selected>
+                            Urgência
+                        </option>
+
                         <option value="Alta">Alta</option>
                         <option value="Média">Média</option>
                         <option value="Baixa">Baixa</option>
-                    </select> 
+
+                    </select>
+
                 </div>
-            </div>
-                
-            <!--descrição-->
-            <div class="input-desc">
-                <textarea name="descricao" placeholder="Descrição" required></textarea>
+
             </div>
 
+            <!-- descrição -->
+            <div class="input-desc">
+
+                <textarea
+                    name="descricao"
+                    placeholder="Descrição"
+                    required></textarea>
+
+            </div>
+
+            <!-- botão -->
             <div>
-                <button class="ocorrencia">Gerar ocorrência</button>
+
+                <button class="ocorrencia">
+                    Gerar ocorrência
+                </button>
+
             </div>
 
         </form>
 
     </main>
 
-<!--<script>
-  const popup = document.getElementById("popup");
-  const abrir = document.getElementById("abrirPopup");
-  const fechar = document.getElementById("fecharPopup");
-  abrir.addEventListener("click", () => {
-    popup.classList.remove("hidden");
-  });
-  fechar.addEventListener("click", () => {
-    popup.classList.add("hidden");
-  });
-</script>-->
+    <!-- script -->
+    <script>
+
+        function abrirPopup() {
+            document.getElementById("popup-ajuda").style.display = "flex";
+        }
+
+        function fecharPopup() {
+            document.getElementById("popup-ajuda").style.display = "none";
+        }
+
+    </script>
 
 </body>
+
 </html>
