@@ -3,6 +3,7 @@
 <head>
     <title>Painel do Operador</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/modal.js') }}" defer></script>
 </head>
 
 <body class="body-operador">
@@ -116,13 +117,16 @@
             <td>{{ item.prioridade }}</td>
             <td>{{ item.first_name }} {{ item.last_name }}</td>
             <td>
+                <!-- BOTÃO DETALHES -->
+                <button onclick='abrirDetalhes("{{ item.id }}", "{{ item.titulo }}", "{{ item.status }}", "{{ item.prioridade }}", "{{ item.first_name }} {{ item.last_name }}", "{{ item.descricao if item.descricao else 'Sem descrição' }}")' style="background: transparent; border: 1px solid white; color: white; padding: 4px 8px; border-radius: 5px; cursor: pointer;">Detalhes</button>
+
                 {% if item.status == 'aberta' %}
-                    <form method="POST" action="/operador/dashboard">
+                    <form method="POST" action="/operador/dashboard" style="display: inline;">
                         <input type="hidden" name="ocorrencia_id" value="{{ item.id }}">
                         <button class="botao-operador" type="submit">Atender</button>
                     </form>
                 {% elif item.status == 'em andamento' %}
-                    <form method="POST" action="/operador/fechar/{{ item.id }}">
+                    <form method="POST" action="/operador/fechar/{{ item.id }}" style="display: inline;">
                         <button class="botao-operador" type="submit">Fechar</button>
                     </form>
                 {% else %}
@@ -142,4 +146,21 @@
 </div>
 
 </body>
+
+<!-- MODAL -->
+<div id="modal-detalhes" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999;">
+    <div style="background: rgba(20,20,40,0.9); backdrop-filter: blur(20px); border: 2px solid white; border-radius: 15px; color: white; padding: 25px; width: 400px; margin: 100px auto;">
+        <span class="modal-close" style="float: right; cursor: pointer; font-size: 24px;">&times;</span>
+        <h3 style="color: rgb(72,195,244); margin-bottom: 15px;">Detalhes</h3>
+        <p><strong>ID:</strong> <span id="modal-id"></span></p>
+        <p><strong>Título:</strong> <span id="modal-titulo"></span></p>
+        <p><strong>Status:</strong> <span id="modal-status"></span></p>
+        <p><strong>Prioridade:</strong> <span id="modal-prioridade"></span></p>
+        <p><strong>Usuário:</strong> <span id="modal-usuario"></span></p>
+        <hr style="margin: 10px 0;">
+        <p><strong>Descrição:</strong></p>
+        <p id="modal-descricao"></p>
+    </div>
+</div>
+
 </html>
