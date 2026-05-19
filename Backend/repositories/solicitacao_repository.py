@@ -13,8 +13,8 @@ class SolicitacaoRepository:
                 INSERT INTO ocorrencias (user_id, titulo, descricao, impacto, urgencia, prioridade, status_id)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
-            cursor.execute(sql, (user_id, titulo, descricao, impacto, urgencia, prioridade, status_id))
-            conn.commit()
+            cursor.execute(sql, (user_id, titulo, descricao, impacto, urgencia, prioridade, status_id)) #recebe sql e as tuplas, mandando o SQL fazer as ações
+            conn.commit() #manda uma confirmação, sem ele o MySQL n salva as alterações
             return True
 
         except Error as e:

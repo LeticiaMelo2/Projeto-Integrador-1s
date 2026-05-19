@@ -27,4 +27,4 @@ class OperadorRepository:
             print(f"Erro ao buscar operador: {e}") #{e} é uma variável, que a biblioteca do MySQL guarda erros como falha na conexão, tabela errada/n existe
             return None #retorna none qndo a busca falha
         finally: #finally é um bloco que smepre executado, tendo erro ou não
-            cursor.close() #fecha o cursos, liberando o bd
+            cursor.close() #fecha o cursor, liberando o bd

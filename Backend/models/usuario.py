@@ -1,3 +1,4 @@
+#define o que é um usuario
 class Usuario:
     def __init__(self, id=None, first_name="", last_name="", email="", password="", permissao_id=None):
         self.id = id
