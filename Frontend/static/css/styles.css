@@ -738,4 +738,17 @@ th, td {
     transform: scale(0.98);
 }
 
+.btn-cancelar {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.btn-cancelar:hover {
+    opacity: 0.9;
 }

@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from services.auth_service import AuthService
 from services.classificacao_service import calcular_prioridade
 from repositories.solicitacao_repository import SolicitacaoRepository
 from forms.usuario_forms import RegisterForm
+from services.solicitacao_service import SolicitacaoService
 
 usuario_bp = Blueprint('usuario', __name__)
 auth_service = AuthService()
@@ -87,3 +88,23 @@ def ocorrencias():
     dados = solicitacao_repo.buscar_por_usuario(user_id, filtro)
 
     return render_template('usuario/status.html', dados=dados, filtro=filtro)
+
+@usuario_bp.route('/cancelar_ocorrencia/<int:solicitacao_id>', methods=['POST'])
+def cancelar_ocorrencia(solicitacao_id):
+
+    if 'user_id' not in session:
+        flash('Usuário não autenticado')
+        return redirect(url_for('usuario.login'))
+
+    user_id = session['user_id']
+
+    service = SolicitacaoService()
+
+    sucesso, mensagem = service.cancelar_ocorrencia(
+        solicitacao_id,
+        user_id
+    )
+
+    flash(mensagem)
+
+    return redirect(url_for('usuario.ocorrencias'))

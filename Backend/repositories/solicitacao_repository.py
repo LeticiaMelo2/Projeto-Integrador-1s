@@ -137,3 +137,48 @@ class SolicitacaoRepository:
             return False, "Erro ao fechar solicitação"
         finally:
             cursor.close()
+
+    def cancelar(self, ocorrencia_id: int, user_id: int):
+        conn = get_db()
+        cursor = conn.cursor(dictionary=True)
+
+        try:
+            # verifica se a ocorrência existe
+            cursor.execute("""
+                           SELECT o.id, s.nome AS status, o.user_id
+                           FROM ocorrencias o
+                                    JOIN status s ON o.status_id = s.id
+                           WHERE o.id = %s
+                           """, (ocorrencia_id,))
+
+            ocorrencia = cursor.fetchone()
+
+            # ocorrência não encontrada
+            if not ocorrencia:
+                return False, "Ocorrência não encontrada"
+
+            # impede cancelar ocorrência de outro usuário
+            if ocorrencia['user_id'] != user_id:
+                return False, "Você não pode cancelar esta ocorrência"
+
+            # permite cancelar apenas se estiver aberta
+            if ocorrencia['status'].lower() != 'aberto':
+                return False, "Só é possível cancelar ocorrências abertas"
+
+            # status_id = 4 -> CANCELADO
+            cursor.execute("""
+                           UPDATE ocorrencias
+                           SET status_id = 4
+                           WHERE id = %s
+                           """, (ocorrencia_id,))
+
+            conn.commit()
+
+            return True, "Ocorrência cancelada com sucesso"
+
+        except Error as e:
+            print(f"Erro ao cancelar ocorrência: {e}")
+            return False, "Erro ao cancelar ocorrência"
+
+        finally:
+            cursor.close()
