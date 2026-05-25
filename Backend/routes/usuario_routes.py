@@ -41,7 +41,7 @@ def register():
             form.first_name.data,
             form.last_name.data,
             form.email.data,
-            form.password.data
+            form.password.data,
         )
 
         if not resultado:

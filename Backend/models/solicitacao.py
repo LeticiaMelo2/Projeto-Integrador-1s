@@ -1,3 +1,4 @@
+#define p que é uma solicitação
 class Solicitacao:
     def __init__(self, id=None, usuario_id=None, titulo="", descricao="", impacto="", urgencia="", prioridade="media", status="aberta", operador_id=None, criada_em=None, atualizada_em=None, fechada_em=None):
         self.id = id

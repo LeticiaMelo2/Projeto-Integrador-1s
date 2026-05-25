@@ -14,17 +14,16 @@
         </div>
 
         <h1>Ocorrência Registrada!</h1>
-        <p>Sua ocorrência foi registrada com sucesso e será processada pelo time de atendimento.</p>
+        <p style="color: #ffffff;>Sua ocorrência foi registrada com sucesso e será processada pelo time de atendimento.</p>
 
         <div class="info-ocorrencia">
-            <p><label>Assunto:</label><span>Registro concluído</span></p>
-            <p><label>Prioridade:</label><span>Média</span></p>
-            <p><label>Status:</label><span style="color: #4ec74e;">Aberto</span></p>
+            <p><label>Assunto:</label><span style="color: #ffffff;">Registro concluído</span></p>
+            <p><label>Status:</label><span style="color: #ffffff;">Aberto</span></p>
         </div>
 
         <div class="botoes-sucesso">
-            <a href="{{ url_for('usuario.home') }}"><button class="btn-voltar" type="button">Voltar ao Início</button></a>
-            <a href="{{ url_for('usuario.ticket') }}"><button class="btn-nova" type="button">Nova Ocorrência</button></a>
+            <a href="{{ url_for('usuario.home') }}"><button class="home" type="button">Voltar ao Início</button></a>
+            <a href="{{ url_for('usuario.ticket') }}"><button class="home" type="button">Nova Ocorrência</button></a>
         </div>
     </main>
 </body>
