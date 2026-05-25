@@ -98,7 +98,7 @@
                         {% if item.status.lower() == 'aberta' %}
 
                         <form method="POST"
-                              action="{{ url_for('usuario.cancelar_ocorrencia', ocorrencia_id=item.id) }}"
+                              action="{{ url_for('usuario.cancelar_ocorrencia', solicitacao_id=item.id) }}"
                               style="margin-top: 8px;">
 
                             <button type="submit" class="btn-cancelar">

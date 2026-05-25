@@ -162,7 +162,7 @@ class SolicitacaoRepository:
                 return False, "Você não pode cancelar esta ocorrência"
 
             # permite cancelar apenas se estiver aberta
-            if ocorrencia['status'].lower() != 'aberto':
+            if ocorrencia['status'].lower() != 'aberta':
                 return False, "Só é possível cancelar ocorrências abertas"
 
             # status_id = 4 -> CANCELADO
