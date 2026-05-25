@@ -110,6 +110,21 @@
                         {% endif %}
 
                     </td>
+                    <td>
+                        {{ item.status }}
+
+                        <a href="{{ url_for('usuario.historico', solicitacao_id=item.id) }}">
+                            <button class="botao-operador">Histórico</button>
+                        </a>
+
+                        {% if item.status.lower() == 'aberta' %}
+                        <form method="POST"
+                              action="{{ url_for('usuario.cancelar_ocorrencia', solicitacao_id=item.id) }}"
+                              style="margin-top: 8px;">
+                            <button type="submit" class="btn-cancelar">Cancelar</button>
+                        </form>
+                        {% endif %}
+                    </td>
 
                 </tr>
 
