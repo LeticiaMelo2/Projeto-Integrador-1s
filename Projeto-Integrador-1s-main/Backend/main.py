@@ -2,6 +2,7 @@ from flask import Flask
 from config import Config
 from routes.usuario_routes import usuario_bp
 from routes.operador_routes import operador_bp
+from routes.solicitacao_routes import solicitacao_bp
 
 app = Flask(__name__, 
             template_folder='../Frontend/templates',
@@ -12,6 +13,7 @@ app.config.from_object(Config)
 
 app.register_blueprint(usuario_bp)
 app.register_blueprint(operador_bp)
+app.register_blueprint(solicitacao_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

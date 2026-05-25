@@ -116,7 +116,7 @@ class SolicitacaoRepository:
         cursor = conn.cursor(dictionary=True)
 
         try:
-            # verifica o status atual antes de fechar, se tive aberta, ou fechada n vai
+            # verifica o status atual antes de fechar
             cursor.execute(
                 "SELECT s.nome AS status FROM ocorrencias o JOIN status s ON o.status_id = s.id WHERE o.id = %s",
                 (ocorrencia_id,))
@@ -137,14 +137,13 @@ class SolicitacaoRepository:
             return False, "Erro ao fechar solicitação"
         finally:
             cursor.close()
-            
-        
+
     def cancelar(self, ocorrencia_id: int, user_id: int):
         conn = get_db()
         cursor = conn.cursor(dictionary=True)
 
         try:
-            # verifica se a ocorrência existe
+            # verifica se a solicitação existe
             cursor.execute("""
                 SELECT o.id, s.nome AS status, o.user_id
                 FROM ocorrencias o
@@ -154,19 +153,19 @@ class SolicitacaoRepository:
 
             ocorrencia = cursor.fetchone()
 
-            # ocorrência não encontrada
+            # solicitação não encontrada
             if not ocorrencia:
-                return False, "Ocorrência não encontrada"
+                return False, "Solicitação não encontrada"
 
-            # impede cancelar ocorrência de outro usuário
+            # impede cancelar solicitação de outro usuário
             if ocorrencia['user_id'] != user_id:
-                return False, "Você não pode cancelar esta ocorrência"
+                return False, "Você não pode cancelar esta solicitação"
 
             # permite cancelar apenas se estiver aberta
             if ocorrencia['status'].lower() != 'aberto':
-                return False, "Só é possível cancelar ocorrências abertas"
+                return False, "Só é possível cancelar solicitações abertas"
 
-            # status_id = 4 -> CANCELADO
+            # status_id = 4 -> cancelado
             cursor.execute("""
                 UPDATE ocorrencias
                 SET status_id = 4
@@ -175,13 +174,11 @@ class SolicitacaoRepository:
 
             conn.commit()
 
-            return True, "Ocorrência cancelada com sucesso"
+            return True, "Solicitação cancelada com sucesso"
 
         except Error as e:
-            print(f"Erro ao cancelar ocorrência: {e}")
-            return False, "Erro ao cancelar ocorrência"
+            print(f"Erro ao cancelar solicitação: {e}")
+            return False, "Erro ao cancelar solicitação"
 
         finally:
             cursor.close()
-    
-    
