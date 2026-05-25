@@ -8,8 +8,6 @@
 
 <body class="body-operador">
 
-
-
 <div class="container-operador">
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +16,6 @@
                 <button class="home">Sair</button>
             </a>
     </div>
-
 
     <!-- ESTATÍSTICAS -->
     <hr>
@@ -117,6 +114,7 @@
             <td>{{ item.status }}</td>
             <td>{{ item.prioridade }}</td>
             <td>{{ item.first_name }} {{ item.last_name }}</td>
+
             <td>
                 <!-- BOTÃO DETALHES -->
                 <button onclick='abrirDetalhes("{{ item.id }}", "{{ item.titulo }}", "{{ item.status }}", "{{ item.prioridade }}", "{{ item.first_name }} {{ item.last_name }}", "{{ item.descricao if item.descricao else 'Sem descrição' }}")' style="background: transparent; border: 1px solid white; color: white; padding: 4px 8px; border-radius: 5px; cursor: pointer;">Detalhes</button>
@@ -126,21 +124,29 @@
                         <input type="hidden" name="ocorrencia_id" value="{{ item.id }}">
                         <button class="botao-operador" type="submit">Atender</button>
                     </form>
+
                 {% elif item.status == 'em andamento' %}
                     <form method="POST" action="/operador/fechar/{{ item.id }}" style="display: inline;">
                         <button class="botao-operador" type="submit">Fechar</button>
                     </form>
+
                 {% else %}
                     Fechado
                 {% endif %}
+
+                <a href="{{ url_for('operador.historico', solicitacao_id=item.id) }}" style="display: inline;">
+                    <button class="botao-operador">Histórico</button>
+                </a>
             </td>
         </tr>
         {% endfor %}
+
         {% if not dados %}
         <tr>
             <td colspan="6">Nenhuma ocorrência encontrada.</td>
         </tr>
         {% endif %}
+
         </tbody>
     </table>
 
