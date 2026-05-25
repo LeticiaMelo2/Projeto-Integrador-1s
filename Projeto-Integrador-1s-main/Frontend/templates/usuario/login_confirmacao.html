@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Login Confirmado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <main class="container">
+        <h1>Login Confirmado</h1>
+        <p class="message-text">Bem-vindo, {{ name }}! Seu acesso foi autorizado com sucesso.</p>
+        <div class="register-link">
+            <a href="{{ url_for('usuario.home') }}"><button type="button" class="home">Ir para o Início</button></a>
+        </div>
+    </main>
+</body>
+</html>

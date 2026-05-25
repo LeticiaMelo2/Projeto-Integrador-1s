@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Ocorrência Registrada</title>
+</head>
+<body>
+    <main class="container">
+        <h1>Ocorrência Registrada!</h1>
+        <p class="message-text">Sua ocorrência foi registrada com sucesso e será processada pelo time de atendimento.</p>
+
+        <div class="info-ocorrencia">
+            <p><strong>Assunto:</strong> <span>Registro concluído</span></p>
+            <p><strong>Status:</strong> <span>Aberto</span></p>
+        </div>
+
+        <div class="register-link">
+            <a href="{{ url_for('usuario.home') }}"><button class="home" type="button">Voltar ao Início</button></a>
+            <a href="{{ url_for('usuario.ticket') }}"><button class="home" type="button">Nova Ocorrência</button></a>
+        </div>
+    </main>
+</body>
+</html>
