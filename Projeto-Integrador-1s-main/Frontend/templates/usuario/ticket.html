@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Reportar ocorrência</title>
+</head>
+<body>
+
+    <!--container principal-->
+    <main class="container-ticket">
+
+         <!-- Botão Home adicionado -->
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a href="{{ url_for('usuario.home') }}">
+                <button style="background-color: #fff; border: none; border-radius: 40px; padding: 8px 20px; cursor: pointer; font-size: 14px; color: rgb(72, 195, 244); font-weight: 600; box-shadow: 0 0 10px rgb(0, 0, .1);">Home</button>
+            </a>
+        </div>
+
+        <!--- <input type="checkbox" id="toggle-info" hidden> -->
+        <h1 class="titulo-com-info">
+            Reportar ocorrência
+            <!--<label for="toggle-info" class="info-coin">?</label> -->
+        </h1>
+       
+        <!--campos principais-->
+        <form method="POST" action="{{ url_for('usuario.criar_ocorrencia') }}">
+
+            <div class="linha-form"> 
+
+                <div class="input-assunto">
+                    <input name="titulo" placeholder="Assunto" required> 
+                </div>
+
+                <!--prioridade-->
+                <div class="input-prioridade">  
+                    <select name="impacto">
+                        <option value="Impacto" disabled selected>Impacto</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Média">Média</option>
+                        <option value="Baixa">Baixa</option>
+                    </select>
+                </div>
+
+                <div class="input-prioridade"> 
+                    <select name="urgencia">
+                        <option value="Urgência" disabled selected>Urgência</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Média">Média</option>
+                        <option value="Baixa">Baixa</option>
+                    </select> 
+                </div>
+            </div>
+                
+            <!--descrição-->
+            <div class="input-desc">
+                <textarea name="descricao" placeholder="Descrição" required></textarea>
+            </div>
+
+            <div>
+                <button class="ocorrencia">Gerar ocorrência</button>
+            </div>
+
+        </form>
+
+    </main>
+
+<!--<script>
+  const popup = document.getElementById("popup");
+  const abrir = document.getElementById("abrirPopup");
+  const fechar = document.getElementById("fecharPopup");
+  abrir.addEventListener("click", () => {
+    popup.classList.remove("hidden");
+  });
+  fechar.addEventListener("click", () => {
+    popup.classList.add("hidden");
+  });
+</script>-->
+
+</body>
+</html>

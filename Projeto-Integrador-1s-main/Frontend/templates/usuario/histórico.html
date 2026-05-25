@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <title>Histórico</title>
+</head>
+
+<body class="body-status">
+
+<div class="container-status">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    ">
+
+        <h1>Histórico da ocorrência</h1>
+
+        <a href="{{ url_for('usuario.status') }}">
+            <button class="home">
+                Voltar
+            </button>
+        </a>
+
+    </div>
+
+    <hr>
+
+    {% if historico %}
+
+        {% for item in historico %}
+
+            <div class="card-historico">
+
+                <h3>{{ item.acao }}</h3>
+
+                <p>{{ item.descricao }}</p>
+
+                <small>
+                    {{ item.data }}
+                </small>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>Nenhum histórico encontrado.</p>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
