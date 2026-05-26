@@ -14,7 +14,7 @@
         </div>
 
         <h1>Ocorrência Registrada!</h1>
-        <p style="color: #ffffff;>Sua ocorrência foi registrada com sucesso e será processada pelo time de atendimento.</p>
+        <p style="color: #ffffff";>Sua ocorrência foi registrada com sucesso e será processada pelo time de atendimento.</p>
 
         <div class="info-ocorrencia">
             <p><label>Assunto:</label><span style="color: #ffffff;">Registro concluído</span></p>
@@ -22,8 +22,8 @@
         </div>
 
         <div class="botoes-sucesso">
-            <a href="{{ url_for('usuario.home') }}"><button class="home" type="button">Voltar ao Início</button></a>
-            <a href="{{ url_for('usuario.ticket') }}"><button class="home" type="button">Nova Ocorrência</button></a>
+            <a href="{{ url_for('usuario.home') }}" style="display: contents"><button class="inicio" type="button">Voltar ao Início</button></a>
+            <a href="{{ url_for('usuario.ticket') }}" style="display: contents"><button class="nova" type="button">Nova Ocorrência</button></a>
         </div>
     </main>
 </body>

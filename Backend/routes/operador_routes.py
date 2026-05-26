@@ -3,6 +3,10 @@ from services.auth_service import AuthService
 from services.estatistica_service import EstatisticaService
 from repositories.solicitacao_repository import SolicitacaoRepository
 from repositories.usuario_repository import UsuarioRepository
+from services.comentario_service import ComentarioService
+from repositories.historico_repository import HistoricoRepository
+
+comentario_service = ComentarioService()
 
 operador_bp = Blueprint('operador', __name__)
 auth_service = AuthService()
@@ -63,3 +67,29 @@ def fechar(id):
         return mensagem
 
     return redirect(url_for('operador.dashboard'))
+
+@operador_bp.route('/operador/historico/<int:solicitacao_id>', methods=['GET', 'POST'])
+def historico(solicitacao_id):
+    if 'operador_id' not in session:
+        return redirect(url_for('operador.login'))
+
+    if request.method == 'POST':
+        mensagem = request.form.get('mensagem', '').strip()
+        if mensagem:
+            comentario_service.adicionar_comentario(
+                solicitacao_id,
+                session.get('operador_id'),
+                'operador',
+                mensagem
+            )
+        return redirect(url_for('operador.historico', solicitacao_id=solicitacao_id))
+
+    historico = HistoricoRepository.listar_por_solicitacao(solicitacao_id)
+    comentarios = comentario_service.listar_por_ocorrencia(solicitacao_id)
+
+    return render_template(
+        'operador/historico.html',
+        historico=historico,
+        comentarios=comentarios,
+        solicitacao_id=solicitacao_id
+    )

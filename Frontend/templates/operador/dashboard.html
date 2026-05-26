@@ -3,22 +3,20 @@
 <head>
     <title>Painel do Operador</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="{{ url_for('static', filename='js/modal.js') }}" defer></script>
 </head>
 
 <body class="body-operador">
 
-
-
 <div class="container-operador">
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1>Chamados</h1>
-            <a href="{{ url_for('operador.login') }}">
+            <a href="{{ url_for('usuario.login') }}">
                 <button class="home">Sair</button>
             </a>
     </div>
-
 
     <!-- ESTATÍSTICAS -->
     <hr>
@@ -72,6 +70,7 @@
                     <option value="aberta" {% if status == 'aberta' %}selected{% endif %}>Abertas</option>
                     <option value="em andamento" {% if status == 'em andamento' %}selected{% endif %}>Em andamento</option>
                     <option value="finalizada" {% if status == 'finalizada' %}selected{% endif %}>Finalizadas</option>
+                    <option value="cancelada" {% if status == 'cancelada' %}selected{% endif %}>Canceladas</option>
                 </select>
             </div>
 
@@ -116,30 +115,54 @@
             <td>{{ item.status }}</td>
             <td>{{ item.prioridade }}</td>
             <td>{{ item.first_name }} {{ item.last_name }}</td>
+
             <td>
                 <!-- BOTÃO DETALHES -->
-                <button onclick='abrirDetalhes("{{ item.id }}", "{{ item.titulo }}", "{{ item.status }}", "{{ item.prioridade }}", "{{ item.first_name }} {{ item.last_name }}", "{{ item.descricao if item.descricao else 'Sem descrição' }}")' style="background: transparent; border: 1px solid white; color: white; padding: 4px 8px; border-radius: 5px; cursor: pointer;">Detalhes</button>
+                <button onclick='abrirDetalhes(
+                    "{{ item.id }}", 
+                    "{{ item.titulo }}", 
+                    "{{ item.status }}", 
+                    "{{ item.prioridade }}", 
+                    "{{ item.first_name }} {{ item.last_name }}", 
+                    "{{ item.descricao if item.descricao else "Sem descrição" }}")' 
+
+                      style="border: none; background: none; cursor: pointer; padding: 0;">
+                    <i class="bx bx-show" title="Detalhes" style="font-size: 24px; color: white;"></i>
+                </button>
 
                 {% if item.status == 'aberta' %}
                     <form method="POST" action="/operador/dashboard" style="display: inline;">
                         <input type="hidden" name="ocorrencia_id" value="{{ item.id }}">
-                        <button class="botao-operador" type="submit">Atender</button>
+                        <button class="botao-operador" type="submit" style="border: none; background: none; cursor: pointer; padding: 0;">
+                            <i class='bx bx-user-check' title="Atender ocorrência" style="font-size: 24px; color: white;"></i>
+                        </button>
                     </form>
+
                 {% elif item.status == 'em andamento' %}
                     <form method="POST" action="/operador/fechar/{{ item.id }}" style="display: inline;">
-                        <button class="botao-operador" type="submit">Fechar</button>
+                        <button type="submit" title="Finalizar ocorrência" style="border: none; background: none; cursor: pointer; padding: 0;">
+                            <i class='bx bx-x-circle'
+                            style="font-size: 24px; color: white;"></i>
+                        </button>
                     </form>
+
                 {% else %}
-                    Fechado
+                    
                 {% endif %}
+
+                <a href="{{ url_for('operador.historico', solicitacao_id=item.id) }}">
+                    <i class='bx bx-file' title="Histórico" style="font-size: 24px; color: white;"></i>
+                </a>
             </td>
         </tr>
         {% endfor %}
+
         {% if not dados %}
         <tr>
             <td colspan="6">Nenhuma ocorrência encontrada.</td>
         </tr>
         {% endif %}
+
         </tbody>
     </table>
 

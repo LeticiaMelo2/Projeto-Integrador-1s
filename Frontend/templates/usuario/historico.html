@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <title>Histórico</title>
+</head>
+
+<body class="body-status">
+
+<div class="container-status">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    ">
+
+        <h1>Histórico da ocorrência</h1>
+
+        <a href="{{ url_for('usuario.ocorrencias') }}">
+            <button class="home">
+                Voltar
+            </button>
+        </a>
+
+    </div>
+
+    <hr>
+
+    <h2 class="section-title">Histórico</h2>
+
+    {% if historico %}
+
+        {% for item in historico %}
+
+            <div class="card-historico">
+
+                <h3>{{ item.acao }}</h3>
+
+                <p>{{ item.descricao }}</p>
+
+                <small>
+                    {{ item.data }}
+                </small>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>Nenhum histórico encontrado.</p>
+
+    {% endif %}
+
+    <hr>
+
+    <h2 class="section-title">Comentários</h2>
+
+    {% if comentarios %}
+        {% for comentario in comentarios %}
+            <div class="card-comentario">
+                <h3>{{ comentario.autor_nome or comentario.tipo_autor|capitalize }}</h3>
+                <p>{{ comentario.mensagem }}</p>
+                <small>{{ comentario.criado_em }}</small>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum comentário ainda. Seja o primeiro a responder.</p>
+    {% endif %}
+
+    <hr>
+
+    <form method="POST" action="{{ url_for('usuario.historico', solicitacao_id=solicitacao_id) }}" class="comentario-form">
+        <div class="input-desc">
+            <textarea name="mensagem" placeholder="Escreva um comentário..." required></textarea>
+        </div>
+        <button type="submit" class="bnt-enviar">Enviar comentário</button>
+    </form>
+
+</div>
+
+</body>
+</html>
