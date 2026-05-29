@@ -1,5 +1,7 @@
 from database.connection import get_db
 from models.solicitacao import Solicitacao
+from models.historico import Historico
+from repositories.historico_repository import HistoricoRepository
 from mysql.connector import Error
 
 class SolicitacaoRepository:
@@ -15,6 +17,17 @@ class SolicitacaoRepository:
             """
             cursor.execute(sql, (user_id, titulo, descricao, impacto, urgencia, prioridade, status_id)) #recebe sql e as tuplas, mandando o SQL fazer as ações
             conn.commit() #manda uma confirmação, sem ele o MySQL n salva as alterações
+
+            ocorrencia_id = cursor.lastrowid
+
+            historico = Historico(
+                solicitacao_id=ocorrencia_id,
+                usuario_id=user_id,
+                acao="CRIACAO",
+                descricao="Solicitação criada pelo usuário"
+            )
+            HistoricoRepository.criar(historico)
+
             return True
 
         except Error as e:
@@ -103,6 +116,15 @@ class SolicitacaoRepository:
             """
             cursor.execute(query, (operador_id, ocorrencia_id))
             conn.commit()
+
+            historico = Historico(
+                solicitacao_id=ocorrencia_id,
+                usuario_id=operador_id,
+                acao="ATENDIMENTO",
+                descricao="Solicitação colocada em andamento pelo operador"
+            )
+            HistoricoRepository.criar(historico)
+
             return True
 
         except Error as e:
@@ -118,7 +140,7 @@ class SolicitacaoRepository:
         try:
             # verifica o status atual antes de fechar, se tive aberta, ou fechada n vai
             cursor.execute(
-                "SELECT s.nome AS status FROM ocorrencias o JOIN status s ON o.status_id = s.id WHERE o.id = %s",
+                "SELECT s.nome AS status, o.operador_id FROM ocorrencias o JOIN status s ON o.status_id = s.id WHERE o.id = %s",
                 (ocorrencia_id,))
             ocorrencia = cursor.fetchone()
 
@@ -130,6 +152,15 @@ class SolicitacaoRepository:
 
             cursor.execute("UPDATE ocorrencias SET status_id = 3 WHERE id = %s", (ocorrencia_id,))
             conn.commit()
+
+            historico = Historico(
+                solicitacao_id=ocorrencia_id,
+                usuario_id=ocorrencia['operador_id'],
+                acao="FINALIZACAO",
+                descricao="Solicitação finalizada pelo operador"
+            )
+            HistoricoRepository.criar(historico)
+
             return True, "Solicitação fechada com sucesso"
 
         except Error as e:
@@ -173,6 +204,14 @@ class SolicitacaoRepository:
                            """, (ocorrencia_id,))
 
             conn.commit()
+
+            historico = Historico(
+                solicitacao_id=ocorrencia_id,
+                usuario_id=user_id,
+                acao="CANCELAMENTO",
+                descricao="Solicitação cancelada pelo usuário"
+            )
+            HistoricoRepository.criar(historico)
 
             return True, "Ocorrência cancelada com sucesso"
 

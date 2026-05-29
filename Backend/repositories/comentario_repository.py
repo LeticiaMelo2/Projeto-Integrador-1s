@@ -41,10 +41,9 @@ class ComentarioRepository:
                        c.tipo_autor,
                        c.mensagem,
                        c.criado_em,
-                       COALESCE(CONCAT(u.first_name, ' ', u.last_name), o.nome) AS autor_nome
+                       CONCAT(u.first_name, ' ', u.last_name) AS autor_nome
                 FROM comentarios c
-                         LEFT JOIN usuarios u ON c.tipo_autor = 'usuario' AND c.usuario_id = u.id
-                         LEFT JOIN operadores o ON c.tipo_autor = 'operador' AND c.usuario_id = o.id
+                         LEFT JOIN usuarios u ON c.usuario_id = u.id
                 WHERE c.solicitacao_id = %s
                 ORDER BY c.criado_em ASC
             """
