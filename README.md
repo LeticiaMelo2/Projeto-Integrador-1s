@@ -256,7 +256,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
   <tr>
     <td align="center" width="150px">
       <a href="https://github.com/LeticiaMelo2">
-        <img src="https://avatars.githubusercontent.com/LeticiaMelo2" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
         <sub>
           <strong>BEATRIZ CAROLINE MORENO TAVARES</strong>
         </sub>
