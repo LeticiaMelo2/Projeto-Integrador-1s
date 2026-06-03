@@ -642,7 +642,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
     <td>
       <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
       <p>
-        Vitor foi responsavel pela implementação da opição de visualisar o historico par o usuario facilitando a comunicação usuario-operador,alem de algumas adições ao banco de dados.
+        Vitor foi responsavel pela implementação da opção de visualisar o historico para o usuario facilitando a comunicação usuario-operador, além de algumas adições ao banco de dados.
       </p>
     </td>
   </tr>
