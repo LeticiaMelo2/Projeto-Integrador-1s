@@ -160,78 +160,75 @@ O banco de dados é composto por **6 tabelas** com os seguintes relacionamentos:
 Para recriar o banco de dados, crie um banco com o nome `dbprojetointegrador1` no MySQL Workbench e execute o script abaixo:
 
 ```sql
--- Tabela de permissões
-CREATE TABLE `permissao` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `descricao` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE DATABASE IF NOT EXISTS dbProjetoIntegrador1;
+USE dbProjetoIntegrador1;
 
-INSERT INTO `permissao` VALUES (1,'usuario'),(2,'operador');
+CREATE TABLE permissao (
+  id INT NOT NULL AUTO_INCREMENT,
+  descricao VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
 
--- Tabela de status
-CREATE TABLE `status` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO permissao VALUES (1,'usuario'),(2,'operador');
 
-INSERT INTO `status` VALUES (1,'aberta'),(2,'em andamento'),(3,'finalizada'),(4,'cancelada');
+CREATE TABLE status (
+  id INT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
 
--- Tabela de usuários
-CREATE TABLE `usuarios` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(300) NOT NULL,
-  `last_name` varchar(300) NOT NULL,
-  `email` varchar(300) NOT NULL,
-  `password` varchar(350) NOT NULL,
-  `permissao_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`),
-  CONSTRAINT `fk_permissao` FOREIGN KEY (`permissao_id`) REFERENCES `permissao` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO status VALUES (1,'aberta'),(2,'em andamento'),(3,'finalizada'),(4,'cancelada');
 
--- Tabela de ocorrências
-CREATE TABLE `ocorrencias` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(200) DEFAULT NULL,
-  `descricao` text,
-  `impacto` varchar(20) DEFAULT NULL,
-  `urgencia` varchar(20) DEFAULT NULL,
-  `prioridade` varchar(20) DEFAULT NULL,
-  `dataHora` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status_id` int DEFAULT NULL,
-  `user_id` int DEFAULT NULL,
-  `operador_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_status` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`),
-  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `fk_ocorrencias_operador` FOREIGN KEY (`operador_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE usuarios (
+  id INT NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(300) NOT NULL,
+  last_name VARCHAR(300) NOT NULL,
+  email VARCHAR(300) NOT NULL,
+  password VARCHAR(350) NOT NULL,
+  permissao_id INT DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY email (email),
+  CONSTRAINT fk_permissao FOREIGN KEY (permissao_id) REFERENCES permissao (id)
+);
 
--- Tabela de comentários
-CREATE TABLE `comentarios` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `solicitacao_id` int NOT NULL,
-  `usuario_id` int NOT NULL,
-  `tipo_autor` varchar(20) NOT NULL,
-  `mensagem` text NOT NULL,
-  `criado_em` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_comentarios_ocorrencia` FOREIGN KEY (`solicitacao_id`) REFERENCES `ocorrencias` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE ocorrencias (
+  id INT NOT NULL AUTO_INCREMENT,
+  titulo VARCHAR(200) DEFAULT NULL,
+  descricao TEXT,
+  impacto VARCHAR(20) DEFAULT NULL,
+  urgencia VARCHAR(20) DEFAULT NULL,
+  prioridade VARCHAR(20) DEFAULT NULL,
+  dataHora TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  status_id INT DEFAULT NULL,
+  user_id INT DEFAULT NULL,
+  operador_id INT DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_status FOREIGN KEY (status_id) REFERENCES status (id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES usuarios (id),
+  CONSTRAINT fk_ocorrencias_operador FOREIGN KEY (operador_id) REFERENCES usuarios (id)
+);
 
--- Tabela de histórico
-CREATE TABLE `historico` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `solicitacao_id` int NOT NULL,
-  `usuario_id` int NOT NULL,
-  `acao` varchar(100) DEFAULT NULL,
-  `descricao` text,
-  `data` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_historico_ocorrencia` FOREIGN KEY (`solicitacao_id`) REFERENCES `ocorrencias` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE historico (
+  id INT NOT NULL AUTO_INCREMENT,
+  solicitacao_id INT NOT NULL,
+  usuario_id INT NOT NULL,
+  acao VARCHAR(100) DEFAULT NULL,
+  descricao TEXT,
+  data DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_historico_ocorrencia FOREIGN KEY (solicitacao_id) REFERENCES ocorrencias (id)
+);
+
+CREATE TABLE comentarios (
+  id INT NOT NULL AUTO_INCREMENT,
+  solicitacao_id INT NOT NULL,
+  usuario_id INT NOT NULL,
+  tipo_autor VARCHAR(20) NOT NULL,
+  mensagem TEXT NOT NULL,
+  criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_comentarios_ocorrencia FOREIGN KEY (solicitacao_id) REFERENCES ocorrencias (id)
+);
 ```
 
 ---
@@ -527,7 +524,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
 <table>
   <tr>
     <td align="center" width="150px">
-      <a href="https://github.com/LeticiaMelo2">
+      <a href="https://github.com/Bia-z">
        <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
         <sub>
           <strong>BEATRIZ CAROLINE MORENO TAVARES</strong>
@@ -538,6 +535,114 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
       <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
       <p>
         Beatriz foi responsável pela arquitetura do fluxo de operador, e correções do front-end e do back-end no geral, e a integração com o banco de dados MySQL.
+      </p>
+    </td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center" width="150px">
+      <a href="https://github.com/Bia-z">
+       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+        <sub>
+          <strong>LETICIA MICHICA DE MELO</strong>
+        </sub>
+      </a>
+    </td>
+    <td>
+      <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
+      <p>
+        Letícia foi responsável pela arquitetura do fluxo de usuário, pela implementação das funcionalidades relacionadas aos usuários e pela modelagem e integração do banco de dados, contribuindo para o funcionamento geral da aplicação.
+      </p>
+    </td>
+  </tr>
+</table>
+
+---
+
+
+---
+
+<table>
+  <tr>
+    <td align="center" width="150px">
+      <a href="https://github.com/Bia-z">
+       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+        <sub>
+          <strong>GUILHERME PAULINO DOS SANTOS ALVES</strong>
+        </sub>
+      </a>
+    </td>
+    <td>
+      <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
+      <p>
+        X
+      </p>
+    </td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center" width="150px">
+      <a href="https://github.com/Bia-z">
+       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+        <sub>
+          <strong>GUILHERME ALONSO JUPIA</strong>
+        </sub>
+      </a>
+    </td>
+    <td>
+      <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
+      <p>
+        X
+      </p>
+    </td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center" width="150px">
+      <a href="https://github.com/Ricavini">
+       <img src="https://avatars.githubusercontent.com/Ricavini" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+        <sub>
+          <strong>RICARDO VINICIUS DUARTE</strong>
+        </sub>
+      </a>
+    </td>
+    <td>
+      <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
+      <p>
+        Ricardo foi responsável pela elaboração da documentação técnica do projeto, registrando sua estrutura, funcionalidades e processos de desenvolvimento. Além disso, atuou na implementação, validação e testes de funcionalidades do sistema, contribuindo para a verificação do correto funcionamento das regras de negócio, integração entre componentes e estabilidade geral da aplicação.
+      </p>
+    </td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center" width="150px">
+      <a href="https://github.com/Bia-z">
+       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+        <sub>
+          <strong>VITOR CORTELACCI MARCHEZONI</strong>
+        </sub>
+      </a>
+    </td>
+    <td>
+      <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
+      <p>
+        X
       </p>
     </td>
   </tr>
