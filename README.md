@@ -546,7 +546,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
   <tr>
     <td align="center" width="150px">
       <a href="https://github.com/LeticiaMelo2">
-       <img src="https://avatars.githubusercontent.com/LeticiaMelo2" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+       <img src="https://avatars.githubusercontent.com/LeticiaMelo2" width="100px;" alt="Leticia Melo" style="border-radius: 50%;"/><br>
         <sub>
           <strong>LETICIA MICHICA DE MELO</strong>
         </sub>
@@ -570,7 +570,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
   <tr>
     <td align="center" width="150px">
       <a href="https://github.com/guipaulino0202">
-       <img src="https://avatars.githubusercontent.com/guipaulino0202" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+       <img src="https://avatars.githubusercontent.com/guipaulino0202" width="100px;" alt="Guilherme Alves" style="border-radius: 50%;"/><br>
         <sub>
           <strong>GUILHERME PAULINO DOS SANTOS ALVES</strong>
         </sub>
@@ -591,7 +591,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
   <tr>
     <td align="center" width="150px">
       <a href="https://github.com/Bia-z">
-       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Guilherme Jupia" style="border-radius: 50%;"/><br>
         <sub>
           <strong>GUILHERME ALONSO JUPIA</strong>
         </sub>
@@ -612,7 +612,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
   <tr>
     <td align="center" width="150px">
       <a href="https://github.com/Ricavini">
-       <img src="https://avatars.githubusercontent.com/Ricavini" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+       <img src="https://avatars.githubusercontent.com/Ricavini" width="100px;" alt="Ricardo Duarte" style="border-radius: 50%;"/><br>
         <sub>
           <strong>RICARDO VINICIUS DUARTE</strong>
         </sub>
@@ -633,7 +633,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
   <tr>
     <td align="center" width="150px">
       <a href="https://github.com/Vetor07">
-       <img src="https://avatars.githubusercontent.com/Vetor07" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+       <img src="https://avatars.githubusercontent.com/Vetor07" width="100px;" alt="Vitor Cortelacci" style="border-radius: 50%;"/><br>
         <sub>
           <strong>VITOR CORTELACCI MARCHEZONI</strong>
         </sub>
