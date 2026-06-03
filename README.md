@@ -61,23 +61,7 @@ O projeto adota uma **arquitetura em camadas**, separando as responsabilidades e
 | **Services** | Regras de negócio (prioridade, autenticação, estatísticas) |
 | **Routes** | Endpoints Flask que recebem requisições e retornam respostas |
 
-### 🔄 Fluxo de Operação
 
-```
-Usuário (HTML/CSS/JS)
-        ↓
-  Route (Flask)
-        ↓
-  Service (regra de negócio)
-        ↓
-  Repository (query SQL)
-        ↓
-  Banco de Dados (MySQL)
-```
-
-**Benefícios da arquitetura:** separação de responsabilidades, fácil manutenção e escalabilidade para novas funcionalidades.
-
----
 
 ## 📁 Estrutura do Projeto
 
