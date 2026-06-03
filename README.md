@@ -590,8 +590,8 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
 <table>
   <tr>
     <td align="center" width="150px">
-      <a href="https://github.com/Bia-z">
-       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Guilherme Jupia" style="border-radius: 50%;"/><br>
+      <a href="https://github.com/GUI-JUPIA">
+       <img src="https://avatars.githubusercontent.com/GUI-JUPIA" width="100px;" alt="Guilherme Jupia" style="border-radius: 50%;"/><br>
         <sub>
           <strong>GUILHERME ALONSO JUPIA</strong>
         </sub>
@@ -600,7 +600,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
     <td>
       <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
       <p>
-        X
+        Foi responsável pela documentação técnica do projeto, incluindo o levantamento e descrição das funcionalidades, e colaboração no desenvolvimento geral do sistema
       </p>
     </td>
   </tr>
