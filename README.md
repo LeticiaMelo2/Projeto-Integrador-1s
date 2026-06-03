@@ -632,7 +632,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
 <table>
   <tr>
     <td align="center" width="150px">
-      <a href="https://github.com/Bia-z">
+      <a href="https://github.com/Vetor07">
        <img src="https://avatars.githubusercontent.com/Vetor07" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
         <sub>
           <strong>VITOR CORTELACCI MARCHEZONI</strong>
