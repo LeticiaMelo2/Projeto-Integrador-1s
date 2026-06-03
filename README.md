@@ -479,7 +479,7 @@ def historico(solicitacao_id):
 | Perfil | Rota de Login | Permissões |
 |--------|--------------|------------|
 | Usuário | `/` | Abrir e acompanhar solicitações |
-| Operador | `/operador/login` | Gerenciar todas as solicitações |
+| Operador | `/`| Gerenciar todas as solicitações |
 
 ---
 
