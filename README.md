@@ -545,8 +545,8 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
 <table>
   <tr>
     <td align="center" width="150px">
-      <a href="https://github.com/Bia-z">
-       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+      <a href="https://github.com/LeticiaMelo2">
+       <img src="https://avatars.githubusercontent.com/LeticiaMelo2" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
         <sub>
           <strong>LETICIA MICHICA DE MELO</strong>
         </sub>
@@ -569,8 +569,8 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
 <table>
   <tr>
     <td align="center" width="150px">
-      <a href="https://github.com/Bia-z">
-       <img src="https://avatars.githubusercontent.com/Bia-z" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
+      <a href="https://github.com/guipaulino0202">
+       <img src="https://avatars.githubusercontent.com/guipaulino0202" width="100px;" alt="Beatriz Caroline" style="border-radius: 50%;"/><br>
         <sub>
           <strong>GUILHERME PAULINO DOS SANTOS ALVES</strong>
         </sub>
@@ -579,7 +579,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
     <td>
       <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
       <p>
-        X
+        Guilherme Paulino desenvolveu e implementou funcionalidades como as telas de sucesso após cadastro e registro de ocorrências, o sistema de comentários nas ocorrências e as mensagens de validação para login ou senha incorretos.
       </p>
     </td>
   </tr>
