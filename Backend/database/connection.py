@@ -9,7 +9,7 @@ class Database: #cria a classe Database
     
     #isso é chamado antes do init, para garantir uma unica instância (conceito Singleton)
     def __new__(cls): #recebe cls (quase mesma coisa que self), porque é criado antes do objeto existir
-        if cls._instance is None: #verifica se já tem instanciacriada
+        if cls._instance is None: #verifica se já tem instancia criada
             cls._instance = super().__new__(cls) #cria um objeto na memória e guarda em cls._instance
             cls._instance.connection = None #inicializa o connection como none, pra mostrar q n tem conexão aberta
         return cls._instance #retorna a instância recém criada, ou que já existia

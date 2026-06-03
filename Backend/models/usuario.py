@@ -7,3 +7,5 @@ class Usuario:
         self.email = email
         self.password = password
         self.permissao_id = permissao_id
+
+#sem model, trabalhariamos com dados soltos assim, com models cada objeto tem um sigificado

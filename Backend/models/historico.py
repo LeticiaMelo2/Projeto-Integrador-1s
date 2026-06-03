@@ -9,7 +9,7 @@ class Historico:
         acao="",
         descricao="",
         data=None
-    ):
+):
         self.id = id
         self.solicitacao_id = solicitacao_id
         self.usuario_id = usuario_id

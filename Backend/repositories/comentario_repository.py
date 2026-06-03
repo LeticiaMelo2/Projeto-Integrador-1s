@@ -48,7 +48,7 @@ class ComentarioRepository:
                 ORDER BY c.criado_em ASC
             """
             cursor.execute(sql, (solicitacao_id,))
-            return cursor.fetchall()
+            return cursor.fetchall() #retorna todas as linhas em forma de dicionário
 
         except Error as e:
             print(f"Erro ao buscar comentários: {e}")

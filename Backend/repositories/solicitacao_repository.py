@@ -18,7 +18,7 @@ class SolicitacaoRepository:
             cursor.execute(sql, (user_id, titulo, descricao, impacto, urgencia, prioridade, status_id)) #recebe sql e as tuplas, mandando o SQL fazer as ações
             conn.commit() #manda uma confirmação, sem ele o MySQL n salva as alterações
 
-            ocorrencia_id = cursor.lastrowid
+            ocorrencia_id = cursor.lastrowid #o MySQL retorna o id do último INSERT executado,lastrowid lê esse valor que o banco já mandou automaticamente
 
             historico = Historico(
                 solicitacao_id=ocorrencia_id,
@@ -76,12 +76,13 @@ class SolicitacaoRepository:
                              JOIN usuarios u ON o.user_id = u.id
                     WHERE 1 = 1 \
                     """
-
+# where 1=1 é um truque pra facilitar adicionar filtros depois, porque todos os filtros novos viram AND
             params = []
 
             # status
             if status and status != "todos":
-                query += " AND s.nome = %s"
+                query += " AND s.nome = %s" #esse += faz com a query seja ela mesma, e adiciona no final o AND (o
+                #s.nome vem da tabela status, que está joinada
                 params.append(status)
 
             # prioridade

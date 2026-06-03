@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 class HistoricoRepository:
 
-    @staticmethod
+    @staticmethod #métoodo estático, não usa self (não precisa do objeto)
     def criar(historico):
         conn = get_db()
         cursor = conn.cursor()
