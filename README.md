@@ -23,7 +23,7 @@ O SCSC é uma plataforma web desenvolvida para digitalizar e organizar o gerenci
 - Visualização do histórico e comentários de cada solicitação
 
 ### 🔹 Operador
-- Login dedicado via painel administrativo
+- Login com autenticação por e-mail e senha, com redirecionamento automático conforme o perfil.
 - Dashboard com visão geral de todas as solicitações
 - Filtros por status, prioridade e usuário
 - Atualização de status (Aberta → Em andamento → Finalizada)
