@@ -23,7 +23,7 @@ O SCSC é uma plataforma web desenvolvida para digitalizar e organizar o gerenci
 - Visualização do histórico e comentários de cada solicitação
 
 ### 🔹 Operador
-- Login dedicado via painel administrativo
+- Login com autenticação por e-mail e senha, com redirecionamento automático conforme o perfil.
 - Dashboard com visão geral de todas as solicitações
 - Filtros por status, prioridade e usuário
 - Atualização de status (Aberta → Em andamento → Finalizada)
@@ -61,23 +61,7 @@ O projeto adota uma **arquitetura em camadas**, separando as responsabilidades e
 | **Services** | Regras de negócio (prioridade, autenticação, estatísticas) |
 | **Routes** | Endpoints Flask que recebem requisições e retornam respostas |
 
-### 🔄 Fluxo de Operação
 
-```
-Usuário (HTML/CSS/JS)
-        ↓
-  Route (Flask)
-        ↓
-  Service (regra de negócio)
-        ↓
-  Repository (query SQL)
-        ↓
-  Banco de Dados (MySQL)
-```
-
-**Benefícios da arquitetura:** separação de responsabilidades, fácil manutenção e escalabilidade para novas funcionalidades.
-
----
 
 ## 📁 Estrutura do Projeto
 
@@ -495,7 +479,7 @@ def historico(solicitacao_id):
 | Perfil | Rota de Login | Permissões |
 |--------|--------------|------------|
 | Usuário | `/` | Abrir e acompanhar solicitações |
-| Operador | `/operador/login` | Gerenciar todas as solicitações |
+| Operador | `/`| Gerenciar todas as solicitações |
 
 ---
 
