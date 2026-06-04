@@ -103,19 +103,15 @@ def ocorrencias():
 
 @usuario_bp.route('/cancelar_ocorrencia/<int:solicitacao_id>', methods=['POST'])
 def cancelar_ocorrencia(solicitacao_id):
-    print(f">>> ROTA CHAMADA - solicitacao_id: {solicitacao_id}")
     
     if 'user_id' not in session:
         flash('Usuário não autenticado')
         return redirect(url_for('usuario.login'))
 
     usuario_id = session['user_id']
-    print(f">>> usuario_id: {usuario_id}")
     
     service = SolicitacaoService()
     sucesso, mensagem = service.cancelar_ocorrencia(solicitacao_id, usuario_id)
-    
-    print(f">>> sucesso: {sucesso} | mensagem: {mensagem}")
 
     flash(mensagem)
     return redirect(url_for('usuario.ocorrencias'))
