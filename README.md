@@ -605,7 +605,7 @@ Um agradecimento especial a todas as pessoas que contribuíram para este projeto
     <td>
       <h3>Backend, Frontend, Banco de Dados e Arquitetura</h3>
       <p>
-        Ricardo foi responsável pela elaboração da documentação técnica do projeto, registrando sua estrutura, funcionalidades e processos de desenvolvimento. Além disso, atuou na implementação, validação e testes de funcionalidades do sistema, contribuindo para a verificação do correto funcionamento das regras de negócio, integração entre componentes e estabilidade geral da aplicação.
+        Ricardo foi responsável pela documentação técnica do projeto, pelos testes e validação do sistema e pelo desenvolvimento da funcionalidade de cancelamento de ocorrências.
       </p>
     </td>
   </tr>
