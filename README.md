@@ -90,10 +90,8 @@ Projeto-Integrador-1s/
 │   │   ├── classificacao_service.py
 │   │   ├── comentario_service.py
 │   │   ├── estatistica_service.py
-│   │   ├── historico_service.py
 │   │   └── solicitacao_service.py
 │   ├── routes/
-│   │   ├── historico_routes.py
 │   │   ├── operador_routes.py
 │   │   └── usuario_routes.py
 │   └── forms/
@@ -323,15 +321,18 @@ def autenticar():
 
 ### 3. Login do Operador
 
-O operador acessa `/operador/login` e informa apenas o e-mail. O sistema busca o cadastro na tabela de operadores e, se encontrado, inicia a sessão de operador.
+O operador acessa `/` e informa o e-mail e a senha. O sistema busca o cadastro na tabela de usuarios e, se encontrado, inicia a sessão de operador.
 
 ```python
-# services/auth_service.py
-def login_operador(self, email):
-    operador = self.operador_repo.buscar_por_email(email)
-    if operador:
-        return operador
-    return None
+# routes/usuario_routes.py
+def autenticar():
+    usuario = auth_service.login_usuario(email, password)
+    if usuario:
+        if usuario.permissao_id == 1:
+            return render_template('usuario/login_confirmacao.html')
+        elif usuario.permissao_id == 2:
+            session['operador_id'] = usuario.id
+            return redirect(url_for('operador.dashboard'))
 ```
 
 ---
